@@ -1,0 +1,47 @@
+﻿@model OrderViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container card col-8">
+
+    <h1 class="card-title">Kargo Ücreti Hesaplama (Strategy Pattern)</h1>
+
+    <div class="card-body">
+
+        <form method="post">
+
+            <label>Sipariş Tutarı</label>
+            <input type="number" asp-for="OrderTotal" step="0.1" class="form-control" required />
+
+            <br />
+
+            <label>Kargo Firması Seçin</label>
+
+            <select asp-for="SelectCargo" class="form-select" required>
+                <option value="Yurtici Kargo">Yurtici Kargo (%10 + 20 TL)</option>
+                <option value="Aras Kargo">Aras Kargo (Sabit 50 TL)</option>
+                <option value="Dhl Kargo">Dhl Kargo (500 Tl üzeri ücretsiz 75Tl )</option>
+            </select>
+            <br />
+            <button type="submit" class="btn btn-primary">Hesapla</button>
+        </form>
+
+    </div>
+
+</div>
+
+@if (Model?.CalculatedShippingCost != null)
+{
+    <div class="alert alert-info mt-4">
+        <p>
+            <strong>Kargo Ücreti :</strong>
+            @Model.CalculatedShippingCost.Value.ToString("N2") TL
+        </p>
+
+        <br />
+
+        <strong>Genel Toplam :</strong>
+        @Model.GrandTotal.Value.ToString("N2") TL
+    </div>
+}
